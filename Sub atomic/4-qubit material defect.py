@@ -13,23 +13,23 @@ qc.cx(0, 1)
 qc.cx(1, 2)
 qc.cx(2, 3)
 
-# DEFECT SIMULATION
-# (uncomment to activate)
+# ======== DEFECT SIMULATION ========
+# Choose one or more defect types (uncomment to activate)
 defect_qubit = 1  # Which atom has the defect (0-3)
 
-# Particle displacement (X-gate)
+# 1. Particle displacement (X-gate)
 # qc.x(defect_qubit)
 
-# Phase defect (Z-gate)
+# 2. Phase defect (Z-gate)
 # qc.z(defect_qubit)
 
-# Combined defect (Y-gate)
+# 3. Combined defect (Y-gate)
 qc.y(defect_qubit)
 
-# Missing atom (remove all gates to this qubit)
+# 4. Missing atom (remove all gates to this qubit)
 # Just don't apply any gates to the defect_qubit
 
-# CONTINUE WITH EXISTING CODE
+# ======== CONTINUE WITH YOUR EXISTING CODE ========
 print("\nCircuit with defect:")
 print(qc)
 
@@ -56,4 +56,3 @@ counts = job_qasm.result().get_counts()
 print("\nMeasurement counts with defect:")
 plot_histogram(counts)
 plt.show()
-

@@ -19,7 +19,7 @@ qc_sv = transpile(qc, backend_sv)
 job_sv = backend_sv.run(qc_sv)
 statevector = job_sv.result().get_statevector()
 
-
+z
 plot_bloch_multivector(statevector)
 plt.show()  # Shows the Bloch spheres
 
