@@ -12,7 +12,7 @@ Projects can span simulations, visualizations, data analysis, and hands-on demon
 
 Current Topics-
 
-1. Sub Atomic:
+Sub Atomic :
 
 Quantum computing and quantum simulation playground.
 
