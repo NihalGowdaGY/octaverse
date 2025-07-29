@@ -37,3 +37,6 @@ counts = job_qasm.result().get_counts()
 # Plot measurement histogram
 plot_histogram(counts)
 plt.show()  # Shows the histogram
+qc.x(2)  # "Flip" atom 2 (simulate a defect)
+new_state = backend.run(qc).result().get_statevector()
+print("State with defect:\n", new_state)

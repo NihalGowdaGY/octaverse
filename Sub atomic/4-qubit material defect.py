@@ -12,28 +12,48 @@ qc.h(0)
 qc.cx(0, 1)
 qc.cx(1, 2)
 qc.cx(2, 3)
-# print circuit
+
+# DEFECT SIMULATION
+# (uncomment to activate)
+defect_qubit = 1  # Which atom has the defect (0-3)
+
+# Particle displacement (X-gate)
+# qc.x(defect_qubit)
+
+# Phase defect (Z-gate)
+# qc.z(defect_qubit)
+
+# Combined defect (Y-gate)
+qc.y(defect_qubit)
+
+# Missing atom (remove all gates to this qubit)
+# Just don't apply any gates to the defect_qubit
+
+# CONTINUE WITH EXISTING CODE
+print("\nCircuit with defect:")
 print(qc)
+
+# Statevector simulation
 backend_sv = Aer.get_backend('statevector_simulator')
 qc_sv = transpile(qc, backend_sv)
 job_sv = backend_sv.run(qc_sv)
 statevector = job_sv.result().get_statevector()
 
-
+# Visualize
+print("\nBloch spheres showing defect effects:")
 plot_bloch_multivector(statevector)
-plt.show()  # Shows the Bloch spheres
+plt.show()
 
-print("Quantum statevector of your 4-atom lattice:\n", statevector)
+print("\nQuantum statevector with defect:\n", statevector)
 
-# Add measurement to all qubits for histogram
+# Measurement simulation
 qc.measure_all()
-
-# Transpile & run on qasm simulator for measurements
 backend_qasm = Aer.get_backend('qasm_simulator')
 qc_qasm = transpile(qc, backend_qasm)
 job_qasm = backend_qasm.run(qc_qasm, shots=1000)
 counts = job_qasm.result().get_counts()
 
-# Plot measurement histogram
+print("\nMeasurement counts with defect:")
 plot_histogram(counts)
-plt.show()  # Shows the histogram
+plt.show()
+
