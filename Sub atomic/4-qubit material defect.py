@@ -13,7 +13,7 @@ qc.cx(0, 1)
 qc.cx(1, 2)
 qc.cx(2, 3)
 
-# ======== DEFECT SIMULATION ========
+#  DEFECT SIMULATION 
 # Choose one or more defect types (uncomment to activate)
 defect_qubit = 1  # Which atom has the defect (0-3)
 
@@ -29,7 +29,7 @@ qc.y(defect_qubit)
 # 4. Missing atom (remove all gates to this qubit)
 # Just don't apply any gates to the defect_qubit
 
-# ======== CONTINUE WITH YOUR EXISTING CODE ========
+# CONTINUE WITH YOUR EXISTING CODE
 print("\nCircuit with defect:")
 print(qc)
 
