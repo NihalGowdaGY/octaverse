@@ -40,7 +40,7 @@ optimal_angle = result.x[0]
 print(f"Optimal defect angle (θ): {optimal_angle:.4f} radians")
 print(f"Minimum excitation probability: {result.fun:.6f}")
 
-# --- Step 4: Analyze and visualize the optimized state ---
+# Analyze and visualize the optimized state
 optimized_qc = qc.assign_parameters({theta: optimal_angle})
 
 backend_sv = Aer.get_backend('statevector_simulator')
