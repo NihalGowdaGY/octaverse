@@ -1,63 +1,96 @@
 from qiskit import QuantumCircuit, transpile
 from qiskit_aer import Aer
-from qiskit.circuit import Parameter
+from qiskit.circuit import ParameterVector
 from qiskit.visualization import plot_bloch_multivector, plot_histogram
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.optimize import minimize  # Use classical scipy optimizer
-# Build parameterized quantum circuit (with a defect)
-defect_qubit = 1  # Qubit to apply the parameterized defect (0-3)
-theta = Parameter('θ')
-qc = QuantumCircuit(4)
-qc.h(0)
-qc.cx(0, 1)
-qc.cx(1, 2)
-qc.cx(2, 3)
-qc.ry(theta, defect_qubit)  # Variable-strength defect
+from scipy.optimize import minimize
 
-# Define cost function
+# -------- PARAMETERS --------
+num_qubits = 4
+defect_thetas = ParameterVector('θ', num_qubits)
+
+# -------- CIRCUIT CREATION WITH MULTI-QUBIT DEFECT --------
+def create_circuit(defect_angles=None):
+    qc = QuantumCircuit(num_qubits)
+    # GHZ preparation
+    qc.h(0)
+    for i in range(num_qubits - 1):
+        qc.cx(i, i+1)
+    # Apply RY defect rotations on all qubits
+    if defect_angles is None:
+        # Parameterized angles (symbolic)
+        for i in range(num_qubits):
+            qc.ry(defect_thetas[i], i)
+    else:
+        # Numerical angles provided
+        for i in range(num_qubits):
+            qc.ry(defect_angles[i], i)
+    return qc
+
+# -------- COST FUNCTION: MINIMIZE EXCITATION --------
 def calculate_cost(statevector):
-    # Probability at least one qubit is excited (states 8-15 in the basis)
-    prob_excited = np.sum(np.abs(statevector.data[8:])**2)
-    return prob_excited
+    probs = statevector.probabilities_dict()
+    excitation = sum(prob for state, prob in probs.items() if state != '0000')
+    return excitation
 
-def cost_function(param_value):
-    # param_value is an array-like: take first element as theta
-    param_theta = param_value[0]
-    param_dict = {theta: param_theta}
-    bound_qc = qc.assign_parameters(param_dict)
-
+def cost_function(param_values):
+    qc = create_circuit(param_values)
     backend = Aer.get_backend('statevector_simulator')
-    qc_sv = transpile(bound_qc, backend)
+    qc_sv = transpile(qc, backend)
     statevector = backend.run(qc_sv).result().get_statevector()
     return calculate_cost(statevector)
 
-# Optimize defect angle using classical scipy optimizer
-initial_theta = 0.1  # Initial guess
+# -------- RUN OPTIMIZATION --------
+initial_guess = [0.0] * num_qubits  # Start with no rotations
+bounds = [(0, np.pi)] * num_qubits  # Bounds for each angle
 
-result = minimize(cost_function, x0=[initial_theta], bounds=[(0, np.pi)], method='L-BFGS-B')  # Robust optimizer with bounds
-optimal_angle = result.x[0]
-print(f"Optimal defect angle (θ): {optimal_angle:.4f} radians")
-print(f"Minimum excitation probability: {result.fun:.6f}")
+result = minimize(
+    cost_function,
+    x0=initial_guess,
+    bounds=bounds,
+    method='L-BFGS-B',
+    options={'maxfun': 500}
+)
 
-# Analyze and visualize the optimized state
-optimized_qc = qc.assign_parameters({theta: optimal_angle})
+optimal_thetas = result.x
+print("\nOptimal defect angles (radians):")
+for i, angle in enumerate(optimal_thetas):
+    print(f"Qubit {i}: θ = {angle:.4f} rad ({np.degrees(angle):.1f}°)")
 
+print(f"\nMinimum total excitation: {result.fun:.6f}")
+
+# -------- FINAL STATE ANALYSIS --------
+qc_opt = create_circuit(optimal_thetas)
 backend_sv = Aer.get_backend('statevector_simulator')
-qc_sv = transpile(optimized_qc, backend_sv)
-statevector = backend_sv.run(qc_sv).result().get_statevector()
+statevector = backend_sv.run(transpile(qc_opt, backend_sv)).result().get_statevector()
 
-print("\nOptimized quantum statevector:\n", statevector)
+# -------- PRINT PROBABILITIES IN PERCENT --------
+probs = statevector.probabilities_dict()
+probs_pct = {state: 100 * prob for state, prob in probs.items()}
 
-# Bloch sphere visualization:
+print("\nTop state probabilities (%):")
+for state in sorted(probs_pct, key=probs_pct.get, reverse=True)[:5]:
+    print(f"{state}: {probs_pct[state]:.1f}%")
+
+# -------- BLOCH MULTIVECTOR VISUALIZATION --------
+plt.figure()
 plot_bloch_multivector(statevector)
+plt.suptitle("Bloch Multivector with Optimized Multi-Qubit Defect")
 plt.show()
 
-# Measurement simulation and histogram
-optimized_qc.measure_all()
+# -------- MEASUREMENT HISTOGRAM WITH PERCENTAGES --------
+qc_opt.measure_all()
 backend_qasm = Aer.get_backend('qasm_simulator')
-qc_qasm = transpile(optimized_qc, backend_qasm)
-counts = backend_qasm.run(qc_qasm, shots=1000).result().get_counts()
-print("\nMeasurement counts with optimized defect:\n", counts)
-plot_histogram(counts)
+counts = backend_qasm.run(transpile(qc_opt, backend_qasm), shots=1000).result().get_counts()
+counts_pct = {state: 100 * count / 1000 for state, count in counts.items()}
+
+print("\nMeasurement histogram (%):")
+for state in sorted(counts_pct, key=counts_pct.get, reverse=True)[:5]:
+    print(f"{state}: {counts_pct[state]:.1f}%")
+
+plt.figure()
+plot_histogram(counts_pct)
+plt.title("Measurement Results (Percentages)")
+plt.ylabel("Probability (%)")
 plt.show()
