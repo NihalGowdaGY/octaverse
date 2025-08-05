@@ -36,11 +36,11 @@ The quantum circuit models a controlled "defect" introduced as a parameterized r
    
 2. **Run training and evaluation:**
 
-Execute the main script to generate quantum data, train the Random Forest classifier, and visualize results.
+   Execute the main script to generate quantum data, train the Random Forest classifier, and visualize results.
 
 3. **Make predictions:**
 
-Use the provided `predict_defect(angle)` function with any defect angle input (in radians) to get a defect strength prediction with confidence based on accurate quantum simulation features.
+   Use the provided `predict_defect(angle)` function with any defect angle input (in radians) to get a defect strength prediction with confidence based on accurate quantum simulation features.
 
 ---
 
