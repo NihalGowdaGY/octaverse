@@ -8,11 +8,11 @@ Structure :
 
 Each topic or project lives in its own subfolder—complete with its own README, code, and resources.
 
-Projects can span simulations, visualizations, data analysis, and hands-on demonstrations of modern scientific tools.
+Projects can span simulations, visualizations, data analysis, and hands-on demonstrations of modern scientific tools, and also uses classical machine learning and neural networks.
 
 Current Topics-
 
-Sub Atomic :
+Quantum x ML:
 
 Quantum computing and quantum simulation playground.
 
@@ -29,3 +29,4 @@ Roadmap :
 Over time, I aim for Octaverse to cover a broad range of subjects, each with a practical, code-driven approach—demonstrating not just theory, but hands-on experimental learning in Python and other scientific computing tools.
 
 Contributions and suggestions for new topics are welcome as the collection grows.
+
