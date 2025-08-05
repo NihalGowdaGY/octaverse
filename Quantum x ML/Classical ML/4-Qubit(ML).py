@@ -33,7 +33,6 @@ def generate_quantum_data(num_samples=200):
         ]
         X.append(features)
         
-        # Label: 0=weak (θ<π/2), 1=strong (θ≥π/2)
         y.append(1 if angle >= np.pi/2 else 0)
     
     return np.array(X), np.array(y)
