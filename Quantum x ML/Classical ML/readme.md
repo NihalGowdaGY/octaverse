@@ -31,12 +31,15 @@ The quantum circuit models a controlled "defect" introduced as a parameterized r
 ## Usage
 
 1. **Install requirements:**
+
    pip install qiskit qiskit-aer scikit-learn matplotlib numpy
    
 2. **Run training and evaluation:**
+
 Execute the main script to generate quantum data, train the Random Forest classifier, and visualize results.
 
 3. **Make predictions:**
+
 Use the provided `predict_defect(angle)` function with any defect angle input (in radians) to get a defect strength prediction with confidence based on accurate quantum simulation features.
 
 ---
@@ -44,7 +47,9 @@ Use the provided `predict_defect(angle)` function with any defect angle input (i
 ## Example
 
 print(predict_defect(0.1)) # Weak defect expected
+
 print(predict_defect(1.5)) # Likely strong defect
+
 print(predict_defect(2.8)) # Strong defect with high confidence
 
 ---
