@@ -1,0 +1,271 @@
+/* Page chrome */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(9, 11, 18, .45);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border)
+}
+
+.brand {
+    font-family: "Space Grotesk";
+    font-weight: 700;
+    letter-spacing: .3px;
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.brand .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, var(--brand), var(--brand-2))
+}
+
+.nav {
+    display: flex;
+    gap: 16px;
+    align-items: center
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: 0;
+    color: var(--text);
+    cursor: pointer
+}
+
+.menu-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    margin: 4px 0;
+    border-radius: 2px
+}
+
+
+/* Hero */
+
+.hero {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 24px;
+    align-items: center
+}
+
+.hero h1 {
+    font-size: 42px;
+    line-height: 1.1;
+    margin: 0
+}
+
+.subtitle {
+    color: var(--muted);
+    max-width: 720px;
+    margin: 12px 0 18px
+}
+
+.hero-ctas {
+    display: flex;
+    gap: 10px;
+    margin-top: 6px
+}
+
+.quick-meta {
+    margin-top: 14px;
+    color: var(--muted)
+}
+
+.avatar-wrap {
+    position: relative;
+    isolation: isolate
+}
+
+.avatar-wrap img {
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow)
+}
+
+.avatar-wrap .ring {
+    position: absolute;
+    inset: -12px;
+    border-radius: 28px;
+    border: 1px dashed rgba(255, 255, 255, .2);
+    animation: spin 14s linear infinite
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+
+/* Background deco */
+
+.bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden
+}
+
+.bg-glow {
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 60vw;
+    opacity: .35;
+    filter: blur(40px)
+}
+
+.bg-pattern {
+    position: absolute;
+    bottom: -8%;
+    left: -5%;
+    width: 80vw;
+    opacity: .15
+}
+
+
+/* Reveal animations */
+
+.reveal-up {
+    opacity: 0;
+    transform: translateY(14px)
+}
+
+.reveal-up.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: opacity .6s ease, transform .6s ease
+}
+
+.delay-1 {
+    transition-delay: .08s
+}
+
+.delay-2 {
+    transition-delay: .16s
+}
+
+.delay-3 {
+    transition-delay: .24s
+}
+
+.delay-4 {
+    transition-delay: .32s
+}
+
+.delay-5 {
+    transition-delay: .4s
+}
+
+
+/* Layout helpers */
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px
+}
+
+.skill-block {
+    padding: 16px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(167, 139, 250, .08), transparent)
+}
+
+.about {
+    display: block
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin: 10px 0 18px
+}
+
+.contact-item {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, .02)
+}
+
+
+/* Cards hover depth */
+
+.card,
+.list-item {
+    position: relative;
+    overflow: hidden
+}
+
+.card::after,
+.list-item::after {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    background: radial-gradient(600px 200px at var(--mx, 50%) var(--my, 50%), rgba(96, 165, 250, .12), transparent 60%);
+    pointer-events: none;
+    transition: opacity .2s ease;
+    opacity: 0
+}
+
+.card:hover::after,
+.list-item:hover::after {
+    opacity: 1
+}
+
+
+/* Footer */
+
+.site-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--muted)
+}
+
+
+/* Responsive */
+
+@media (max-width:960px) {
+    .hero {
+        grid-template-columns: 1fr
+    }
+    .avatar-wrap img {
+        width: 220px;
+        height: 220px
+    }
+    .nav {
+        display: none
+    }
+    .menu-toggle {
+        display: block
+    }
+}
+
+@media (max-width:560px) {
+    .hero h1 {
+        font-size: 34px
+    }
+}

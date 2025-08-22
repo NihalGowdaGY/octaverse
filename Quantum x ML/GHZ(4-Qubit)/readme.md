@@ -16,7 +16,7 @@ Python 3.13 (other Python 3.9+ versions should work, but this guide assumes 3.13
 
 Required Libraries:
 
-Qiskit (core SDK, includes circuit building, transpiler, and visualization
+Qiskit core SDK, includes circuit building, transpiler, and visualization
 
 Qiskit Aer (high-performance quantum simulators)
 
