@@ -3,30 +3,32 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Nihal Gowda G Y — Portfolio</title>
     <meta name="description" content="ECE student specializing in VLSI, Embedded/IoT, Cloud, and Quantum×ML. Projects, achievements, certifications, and memberships." />
-    <meta property="og:title" content="Nihal Gowda G Y — Portfolio">
-    <meta property="og:description" content="VLSI • Embedded • IoT • Cloud • Quantum×ML">
-    <meta property="og:image" content="assets/images/og.jpg">
+    <meta property="og:title" content="Nihal Gowda G Y — Portfolio" />
+    <meta property="og:description" content="VLSI • Embedded • IoT • Cloud • Quantum×ML" />
+    <meta property="og:image" content="assets/images/og.jpg" />
     <link rel="icon" href="assets/images/favicon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/theme.css">
-    <link rel="stylesheet" href="styles/animations.css">
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+    <!-- Styles: keep this order -->
+    <link rel="stylesheet" href="styles/theme.css" />
+    <link rel="stylesheet" href="styles/animations.css" />
+    <link rel="stylesheet" href="styles/main.css" />
 </head>
 
 <body>
     <div class="bg">
-        <img class="bg-glow" src="assets/images/glow.png" alt="">
-        <img class="bg-pattern" src="assets/images/pattern.svg" alt="">
+        <img class="bg-glow" src="assets/images/glow.png" alt="" />
+        <img class="bg-pattern" src="assets/images/pattern.svg" alt="" />
     </div>
 
     <header class="site-header">
         <a class="brand" href="#">
             <span class="dot"></span> Nihal Gowda G Y
         </a>
+
         <nav class="nav">
             <a href="#work">Projects</a>
             <a href="#skills">Skills</a>
@@ -37,18 +39,21 @@
             <a class="btn small" href="assets/pdf/Core_Resume_Nihal.pdf" download>Core Resume</a>
             <a class="btn small" href="assets/pdf/IT_Resume_Nihal.pdf" download>IT Resume</a>
         </nav>
+
         <button class="menu-toggle" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+        <span></span><span></span><span></span>
+      </button>
     </header>
 
     <main>
+        <!-- Hero -->
         <section class="hero section" id="home">
             <div class="hero-content">
                 <h1 class="reveal-up">Building intelligent hardware and software at the edge.</h1>
                 <p class="subtitle reveal-up delay-1">
-                    Electronics & Communication student (CGPA 8.70/10) focused on <strong>VLSI</strong>, <strong>Embedded/IoT</strong>, <strong>Cloud</strong>, and <strong>Quantum×ML</strong>. I design microcontroller systems, real‑time sensing, and energy‑efficient
-                    solutions.
+                    Electronics &amp; Communication student (CGPA 8.70/10) focused on
+                    <strong>VLSI</strong>, <strong>Embedded/IoT</strong>, <strong>Cloud</strong>, and
+                    <strong>Quantum×ML</strong>. I design microcontroller systems, real‑time sensing, and energy‑efficient solutions.
                 </p>
                 <div class="hero-ctas reveal-up delay-2">
                     <a class="btn primary" href="#work">See Projects</a>
@@ -58,6 +63,7 @@
                     <span>BE ECE — Adichunchanagiri Institute of Technology (Dec 2022–May 2026)</span>
                 </div>
             </div>
+
             <div class="hero-visual reveal-up delay-2">
                 <div class="avatar-wrap" data-tilt>
                     <img src="assets/images/avatar.jpg" alt="Portrait of Nihal Gowda G Y" />
@@ -66,8 +72,14 @@
             </div>
         </section>
 
+        <!-- Projects -->
         <section id="work" class="section">
-            <h2 class="section-title reveal-up">Selected Projects</h2>
+            <div class="section-header reveal-up" onmousemove="this.style.setProperty('--mx', (event.clientX - this.getBoundingClientRect().left) + 'px'); this.style.setProperty('--my', (event.clientY - this.getBoundingClientRect().top) + 'px');">
+                <h2 class="section-title">Selected Projects</h2>
+                <p class="section-sub">A mix of embedded, IoT, energy, and quantum×ML explorations. Built with real hardware, real constraints, and measurable outcomes.</p>
+                <div class="section-accent"></div>
+            </div>
+
             <div class="grid">
                 <article class="card reveal-up" data-tilt>
                     <div class="card-media">
@@ -90,7 +102,7 @@
                     </div>
                     <div class="card-body">
                         <h3>Non‑Biodegradable Waste Energy Converter</h3>
-                        <p>ESP32‑based energy harvesting with Thermoelectric Generators, battery storage + monitoring (temperature), and UPI incentive model.</p>
+                        <p>ESP32‑based energy harvesting with TEGs, battery storage + monitoring (temperature), and UPI incentive model.</p>
                         <ul class="tags">
                             <li>ESP32</li>
                             <li>TEG</li>
@@ -121,6 +133,7 @@
             </div>
         </section>
 
+        <!-- Skills -->
         <section id="skills" class="section alt">
             <h2 class="section-title reveal-up">Skills</h2>
             <div class="skills-grid">
@@ -129,7 +142,7 @@
                     <p>Xilinx ISE, Tanner EDA, VHDL</p>
                 </div>
                 <div class="skill-block reveal-up delay-1" data-tilt>
-                    <h3>Embedded & IoT</h3>
+                    <h3>Embedded &amp; IoT</h3>
                     <p>ESP32, Arduino, Raspberry Pi, Embedded C, MQTT/HTTP</p>
                 </div>
                 <div class="skill-block reveal-up delay-2" data-tilt>
@@ -137,11 +150,11 @@
                     <p>Python, C, C++</p>
                 </div>
                 <div class="skill-block reveal-up delay-3" data-tilt>
-                    <h3>Cloud & DevOps</h3>
+                    <h3>Cloud &amp; DevOps</h3>
                     <p>AWS Architecture, EC2, S3, Lambda, IAM, Git, GitHub</p>
                 </div>
                 <div class="skill-block reveal-up delay-4" data-tilt>
-                    <h3>Hardware & Sensors</h3>
+                    <h3>Hardware &amp; Sensors</h3>
                     <p>IR Sensors, Power Converters, Energy Harvesting Modules</p>
                 </div>
                 <div class="skill-block reveal-up delay-5" data-tilt>
@@ -151,6 +164,7 @@
             </div>
         </section>
 
+        <!-- Achievements -->
         <section id="achievements" class="section">
             <h2 class="section-title reveal-up">Achievements</h2>
             <div class="list">
@@ -165,13 +179,14 @@
             </div>
         </section>
 
+        <!-- Certifications -->
         <section id="certs" class="section alt">
             <h2 class="section-title reveal-up">Certifications</h2>
             <div class="grid">
                 <article class="card reveal-up" data-tilt>
                     <div class="card-body">
                         <h3>IEEE DL Workshop — Advanced Antenna Technologies</h3>
-                        <p>Actively participated in expert sessions on cutting‑edge antenna technologies (June 1, 2025, RVCE, Bengaluru).</p>
+                        <p>Participated in expert sessions on cutting‑edge antenna technologies (June 1, 2025, RVCE, Bengaluru).</p>
                         <div class="links">
                             <a class="btn small" href="assets/pdf/IEEE_Antenna.pdf" target="_blank" rel="noopener">View PDF</a>
                             <a class="btn small ghost" href="assets/pdf/IEEE_Antenna.pdf" download>Download</a>
@@ -182,7 +197,7 @@
                 <article class="card reveal-up delay-1" data-tilt>
                     <div class="card-body">
                         <h3>I2I: Institute to Industry Forum 4.0 — IEEE CAS</h3>
-                        <p>Participated in the IEEE CASS event bridging academic research with industry insights (Mar 22, 2025, MITE).</p>
+                        <p>Participated in IEEE CASS event bridging academic research with industry insights (Mar 22, 2025, MITE).</p>
                         <div class="links">
                             <a class="btn small" href="assets/pdf/IEEE_i2i.pdf" target="_blank" rel="noopener">View PDF</a>
                             <a class="btn small ghost" href="assets/pdf/IEEE_i2i.pdf" download>Download</a>
@@ -215,8 +230,9 @@
             </div>
         </section>
 
+        <!-- Memberships -->
         <section id="memberships" class="section">
-            <h2 class="section-title reveal-up">Memberships & Leadership</h2>
+            <h2 class="section-title reveal-up">Memberships &amp; Leadership</h2>
             <div class="list">
                 <article class="list-item reveal-up" data-tilt>
                     <h3>IEEE Student Member (2025)</h3>
@@ -228,7 +244,7 @@
                 </article>
 
                 <article class="list-item reveal-up delay-1" data-tilt>
-                    <h3>IEEE Circuits & Systems Society — Student Member (2025)</h3>
+                    <h3>IEEE Circuits &amp; Systems Society — Student Member (2025)</h3>
                     <p>CAS Society member with commitment to advancing electronics and systems research and innovation.</p>
                     <div class="links">
                         <a class="btn small" href="assets/pdf/MEMCAS004.pdf" target="_blank" rel="noopener">View PDF</a>
@@ -238,12 +254,15 @@
             </div>
         </section>
 
+        <!-- About -->
         <section id="about" class="section alt">
             <h2 class="section-title reveal-up">About</h2>
             <div class="about">
                 <div class="about-text reveal-up" data-tilt>
-                    <p>Motivated ECE student specializing in VLSI, Embedded Systems, and IoT. Skilled in microcontroller programming, PCB/EDA tools, real‑time sensor integration, and hardware troubleshooting. Passionate about innovation and energy‑efficient
-                        systems, with hands‑on projects connecting hardware to cloud and quantum computing research.</p>
+                    <p>
+                        Motivated ECE student specializing in VLSI, Embedded Systems, and IoT. Skilled in microcontroller programming, PCB/EDA tools, real‑time sensor integration, and hardware troubleshooting. Passionate about innovation and energy‑efficient systems, with hands‑on
+                        projects connecting hardware to cloud and quantum computing research.
+                    </p>
                     <ul class="bullets">
                         <li>CGPA: 8.70/10</li>
                         <li>Relevant courses: VLSI Design, Microcontroller Systems, DSP, Digital Electronics, Computer Networks, Cloud Computing, ML, IoT Applications</li>
@@ -253,6 +272,7 @@
             </div>
         </section>
 
+        <!-- Contact -->
         <section id="contact" class="section">
             <h2 class="section-title reveal-up">Contact</h2>
             <div class="contact-grid">
@@ -279,6 +299,7 @@
         <div>Built with care — Dark, animated, responsive</div>
     </footer>
 
+    <!-- Scripts: keep this order -->
     <script src="scripts/scrollreveal.min.js"></script>
     <script src="scripts/tilt.js"></script>
     <script src="scripts/app.js"></script>

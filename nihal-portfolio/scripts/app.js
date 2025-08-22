@@ -1,6 +1,10 @@
+console.log('app.js alive');
+// scripts/app.js
 // Year
 const yearEl = document.getElementById('year');
-if (yearEl) yearEl.textContent = new Date().getFullYear();
+if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
+}
 
 // Mobile menu
 const toggle = document.querySelector('.menu-toggle');
@@ -14,58 +18,149 @@ if (toggle && nav) {
     });
 }
 
-// Ensure reveal elements are visible by default (prevents "empty" page)
-document.querySelectorAll('.reveal-up').forEach(el => el.classList.add('is-visible'));
+// Ensure content is visible even if animations fail
+document.querySelectorAll('.reveal-up').forEach((el) => {
+    el.classList.add('is-visible');
+});
 
-// Try ScrollReveal, but never block rendering if it errors
-(function initRevealSafely() {
-    if (typeof ScrollReveal === 'undefined') return; // library not loaded; fallback already applied
-    try {
-        const sr = ScrollReveal({
-            distance: '20px',
-            duration: 700,
-            easing: 'cubic-bezier(0.2, 0.6, 0, 1)',
-            interval: 80,
-            cleanup: true,
-            container: document.documentElement
-        });
-        sr.reveal('.reveal-up', { origin: 'bottom' });
-    } catch (err) {
-        console.warn('Reveal disabled (non-fatal):', err);
-        // items are already visible via fallback above
-    }
+// IntersectionObserver reveal (staggered)
+(function initReveals() {
+    const els = Array.from(document.querySelectorAll('.reveal-up'));
+    if (!('IntersectionObserver' in window) || !els.length) return;
+
+    els.forEach((el) => {
+        el.style.opacity = 0;
+        el.style.transform = 'translateY(14px)';
+    });
+
+    const io = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                const delay = Number(el.dataset.delay || 0) * 80;
+                setTimeout(() => el.classList.add('is-visible'), delay);
+                io.unobserve(el);
+            });
+        }, { threshold: 0.12 }
+    );
+
+    els.forEach((el) => io.observe(el));
 })();
 
-// Mouse glow tracking
+// Mouse glow tracking for hover light
 function trackGlow(selector) {
-    document.querySelectorAll(selector).forEach(card => {
-        card.addEventListener('mousemove', e => {
-            const r = card.getBoundingClientRect();
-            card.style.setProperty('--mx', `${e.clientX - r.left}px`);
-            card.style.setProperty('--my', `${e.clientY - r.top}px`);
+    document.querySelectorAll(selector).forEach((el) => {
+        el.addEventListener('mousemove', (e) => {
+            const r = el.getBoundingClientRect();
+            el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+            el.style.setProperty('--my', `${e.clientY - r.top}px`);
         });
     });
 }
 trackGlow('.card');
 trackGlow('.list-item');
 
-// Tilt init (safe)
-(function initTiltSafely() {
-    if (typeof VanillaTilt === 'undefined') return;
-    try {
-        VanillaTilt.init(document.querySelectorAll('[data-tilt]'), {
-            max: 8,
-            speed: 400,
-            glare: true,
-            'max-glare': 0.15,
-            gyroscope: true
+// Click ripple on cards/list items
+(function initCardRipple() {
+    const nodes = document.querySelectorAll('.card, .list-item');
+    nodes.forEach((el) => {
+        el.addEventListener('click', (e) => {
+            const r = el.getBoundingClientRect();
+            const x = e.clientX - r.left;
+            const y = e.clientY - r.top;
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            el.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
         });
-    } catch (err) {
-        console.warn('Tilt disabled (non-fatal):', err);
-    }
+    });
 })();
 
-// Contact form (no backend wired)
+// Parallax for glow background
+(function parallaxGlow() {
+    const glow = document.querySelector('.bg-glow');
+    if (!glow) return;
+
+    let scrollY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 10;
+        const y = (e.clientY / window.innerHeight - 0.5) * 10;
+        glow.style.transform = `translate(${x}px, ${y + scrollY}px)`;
+    });
+
+    window.addEventListener(
+        'scroll',
+        () => {
+            scrollY = window.scrollY * 0.05;
+            glow.style.transform = `translate(0px, ${scrollY}px)`;
+        }, { passive: true }
+    );
+})();
+
+// Tilt: wait for library, then init safely
+(function initTiltWhenReady() {
+    const MAX_TRIES = 40; // ~2s (40 * 50ms)
+    let tries = 0;
+
+    function tryInit() {
+        if (typeof window.VanillaTilt !== 'function') {
+            if (tries++ < MAX_TRIES) return setTimeout(tryInit, 50);
+            console.warn('Tilt unavailable after waiting; skipping.');
+            return;
+        }
+
+        try {
+            const nodes = Array.from(document.querySelectorAll('[data-tilt]')).filter(
+                (n) => n && n.nodeType === 1
+            );
+            if (!nodes.length) return;
+
+            if (typeof window.VanillaTilt.init === 'function') {
+                window.VanillaTilt.init(nodes, {
+                    max: 10,
+                    speed: 500,
+                    glare: true,
+                    'max-glare': 0.18,
+                    gyroscope: true
+                });
+            } else {
+                nodes.forEach((el) => {
+                    // eslint-disable-next-line no-new
+                    new window.VanillaTilt(el, {
+                        max: 10,
+                        speed: 500,
+                        glare: true,
+                        'max-glare': 0.18,
+                        gyroscope: true
+                    });
+                });
+            }
+        } catch (err) {
+            console.warn('Tilt disabled (non-fatal):', err);
+        }
+    }
+
+    tryInit();
+})();
+
+// Keyboard accessibility: Enter activates first link inside card
+(function a11yActivateOnEnter() {
+    document.querySelectorAll('.card, .list-item').forEach((el) => {
+        el.setAttribute('tabindex', '0');
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const link = el.querySelector('a[href]');
+                if (link) link.click();
+            }
+        });
+    });
+})();
+
+// Contact form placeholder (no backend)
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
