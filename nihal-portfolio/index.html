@@ -1,3 +1,4 @@
+<!-- index.html (with particle animation integrated into project cards) -->
 <!doctype html>
 <html lang="en">
 
@@ -72,7 +73,7 @@
             </div>
         </section>
 
-        <!-- Projects -->
+        <!-- Projects (with particle animations in media areas) -->
         <section id="work" class="section">
             <div class="section-header reveal-up" onmousemove="this.style.setProperty('--mx', (event.clientX - this.getBoundingClientRect().left) + 'px'); this.style.setProperty('--my', (event.clientY - this.getBoundingClientRect().top) + 'px');">
                 <h2 class="section-title">Selected Projects</h2>
@@ -81,8 +82,13 @@
             </div>
 
             <div class="grid">
+                <!-- Card 1: Line Follower -->
                 <article class="card reveal-up" data-tilt>
                     <div class="card-media">
+                        <!-- PARTICLES (green tone for IoT/Embedded) -->
+                        <div class="particles particles-green">
+                            <span></span><span></span><span></span><span></span><span></span>
+                        </div>
                         <div class="badge">IoT | Embedded</div>
                     </div>
                     <div class="card-body">
@@ -96,8 +102,13 @@
                     </div>
                 </article>
 
+                <!-- Card 2: Waste Energy -->
                 <article class="card reveal-up delay-1" data-tilt>
                     <div class="card-media">
+                        <!-- PARTICLES (blue tone for Energy/IoT) -->
+                        <div class="particles particles-blue">
+                            <span></span><span></span><span></span><span></span><span></span>
+                        </div>
                         <div class="badge">Energy | IoT</div>
                     </div>
                     <div class="card-body">
@@ -112,8 +123,13 @@
                     </div>
                 </article>
 
+                <!-- Card 3: Quantum × ML -->
                 <article class="card reveal-up delay-2" data-tilt>
                     <div class="card-media">
+                        <!-- PARTICLES (violet tone for Quantum × ML) -->
+                        <div class="particles particles-violet">
+                            <span></span><span></span><span></span><span></span><span></span>
+                        </div>
                         <div class="badge">Quantum × ML</div>
                     </div>
                     <div class="card-body">
@@ -289,14 +305,14 @@
                 </div>
                 <textarea required name="message" rows="6" placeholder="Message"></textarea>
                 <button class="btn primary" type="submit">Send</button>
-                <p class="muted">Tip: integrate Formspree or Netlify Forms by adding action and data attributes.</p>
+                <p class="muted"></p>
             </form>
         </section>
     </main>
 
     <footer class="site-footer">
         <div>© <span id="year"></span> Nihal Gowda G Y</div>
-        <div>Built with care — Dark, animated, responsive</div>
+        <div>Engineering with precision, chasing the horizon of possibility.</div>
     </footer>
 
     <!-- Scripts: keep this order -->

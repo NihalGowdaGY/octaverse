@@ -1,5 +1,6 @@
 /* ================================================
    styles/animations.css — Visible-first, enhanced
+   (Updated to include particle animations in card-media)
    ================================================ */
 
 
@@ -308,6 +309,113 @@
 }
 
 
+/* 4b) Particle dots in card-media (Option B) */
+
+.card-media {
+    position: relative;
+    height: 160px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: radial-gradient(120% 120% at 0% 0%, rgba(110, 231, 183, .12), rgba(96, 165, 250, .06) 40%, transparent 70%), linear-gradient(180deg, rgba(255, 255, 255, .04), transparent);
+}
+
+.particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+
+/* Base particle style */
+
+.particles span {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    filter: blur(0.4px);
+    opacity: 0;
+    animation: drift 8s linear infinite;
+    will-change: transform, opacity;
+}
+
+
+/* Color themes per project (match your brand palette) */
+
+.particles-green span {
+    background: radial-gradient(circle, rgba(110, 231, 183, .9), rgba(110, 231, 183, 0));
+}
+
+.particles-blue span {
+    background: radial-gradient(circle, rgba(96, 165, 250, .9), rgba(96, 165, 250, 0));
+}
+
+.particles-violet span {
+    background: radial-gradient(circle, rgba(167, 139, 250, .9), rgba(167, 139, 250, 0));
+}
+
+
+/* Place 5 dots with varied durations and positions */
+
+.particles span:nth-child(1) {
+    top: 18%;
+    left: 14%;
+    animation-duration: 9s;
+    animation-delay: .1s;
+}
+
+.particles span:nth-child(2) {
+    top: 34%;
+    left: 66%;
+    animation-duration: 7.6s;
+    animation-delay: .4s;
+}
+
+.particles span:nth-child(3) {
+    top: 62%;
+    left: 28%;
+    animation-duration: 8.8s;
+    animation-delay: .2s;
+}
+
+.particles span:nth-child(4) {
+    top: 26%;
+    left: 82%;
+    animation-duration: 7.9s;
+    animation-delay: .6s;
+}
+
+.particles span:nth-child(5) {
+    top: 72%;
+    left: 48%;
+    animation-duration: 9.3s;
+    animation-delay: .3s;
+}
+
+@keyframes drift {
+    0% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+    10% {
+        opacity: .65;
+    }
+    50% {
+        transform: translate(12px, -10px);
+        opacity: .65;
+    }
+    90% {
+        opacity: .65;
+    }
+    100% {
+        transform: translate(-8px, 10px);
+        opacity: 0;
+    }
+}
+
+
 /* 5) EFFECTS: mouse light, ripple, focus */
 
 .card::after,
@@ -399,4 +507,57 @@
         transform: none !important;
         opacity: 1 !important;
     }
+    .particles span {
+        animation: none !important;
+        opacity: .9;
+    }
+}
+
+
+/* Contact section layout improvements /
+.contact-grid {
+display: grid;
+grid-template-columns: 1fr;
+gap: 10px; / vertical spacing between links on mobile /
+margin-bottom: 16px; / space below links before the form */
+
+.contact-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.02);
+    white-space: nowrap;
+    /* keep each item on one line /
+width: max-content; / shrink to content width */
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (min-width: 720px) {
+    .contact-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        /* 2 columns on tablets /
+gap: 12px 14px; / row and column gaps */
+    }
+}
+
+@media (min-width: 1024px) {
+    .contact-grid {
+        grid-template-columns: repeat(4, auto);
+        /* 4 items in a row on desktop /
+justify-content: start;
+gap: 12px 18px; / more breathing room */
+    }
+}
+
+
+/* Optional: add small icons and hover feedback */
+
+.contact-item:hover {
+    transform: translateY(-1px);
+    transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
 }
